@@ -4,10 +4,9 @@
 -- Due: Thursday, October 19, 2017
 module Main (main) where
 import Control.Monad.State
-import Definitions
 }
 
---%wrapper "monad"
+%wrapper "monad"
 
 $digit = [0-9]    -- Digits
 $alpha = [a-zA-Z] -- Alphabetic characters
@@ -43,16 +42,12 @@ tokens :-
 <0>   \(        {\s -> LPAREN}
 <0>   \)        {\s -> RPAREN}
 <0>   \\        {\s -> LAMBDA}
-<string> \"     { beginString }
+<string> \"     { begin string  }
 <string> [^\"]  ;
-<string> \"     ;
+<string> \"     { begin 0 }
 <0>   $alpha+   {\s -> VAR s}
 
 {
-type LexAction = Int -> String -> ParseMon (Maybe Token)
-
-
-
 -- The Token type
 data Token =
     BOOLVAL Bool
@@ -88,7 +83,7 @@ data Token =
     deriving (Eq,Show)
 
 main = do
-  --s <- getContents
-  --slet r = runAlex s alexMonadScan
-  print "lolololol"
+  s <- getContents
+  let r = runAlex s alexMonadScan
+  --print r
 }
