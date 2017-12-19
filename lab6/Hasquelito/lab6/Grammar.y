@@ -42,10 +42,9 @@ import Lexer
     '('     {LPAREN}
     ')'     {RPAREN}
     var     {VAR $$}
-%nonassoc bool int '('
+%nonassoc var '(' boolval intval ')'
 %right '->'
-%right if else let in then lambda
-%nonassoc boolval intval var
+%right if let else in then
 %right '||'
 %right '&&'
 %nonassoc '==' '/=' '<' '<=' '>' '>='
@@ -61,7 +60,6 @@ import Lexer
 AST :
     boolval                     {Boolean $1}
     | intval                    {Integer $1}
-    | AST AST %prec APP			{App $1 $2}
     | let var '=' AST in AST    {Let $2 $4 $6}
     | if AST then AST else AST  {If $2 $4 $6}
     | '(' lambda var '->' AST ')' '::' TypeExp '->' TypeExp {Lambda $3 $5 $8 $10}
@@ -73,21 +71,23 @@ AST :
     | '-' AST '-' AST %prec SUB {Minus (Minus (Integer 0) $2) $4}
     | '-' AST '+' AST %prec SUB	{Plus  (Minus (Integer 0) $2) $4}
     | AST '*' AST               {Times $1 $3}
+    | AST AST %prec APP			{App $1 $2}
+    | quot AST AST              {Quot $2 $3}
+    | rem AST AST               {Rem $2 $3}
     | AST '==' AST              {Equals $1 $3}
     | AST '>=' AST              {Or (Gt $1 $3) (Equals $1 $3)}
     | AST '<=' AST              {Or (Lt $1 $3) (Equals $1 $3)}
     | AST '/=' AST              {Or (Gt $1 $3) (Lt $1 $3)}
     | AST '>' AST               {Gt $1 $3}
     | AST '<' AST               {Lt $1 $3}
-    | quot AST AST              {Quot $2 $3}
-    | rem AST AST               {Rem $2 $3}
-    | var                       {Variable $1}
     | '(' AST ')'               {$2}
+    | var                       {Variable $1}
 
 TypeExp :
     bool        				{BoolType}
     | int       				{IntType}
     | TypeExp '->' TypeExp 		{Arrow $1 $3}
+	| '(' TypeExp ')'			{$2}
 {
 
 parserError:: [Token] -> a

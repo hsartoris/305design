@@ -19,8 +19,11 @@ typeCheckBin t1 _ op tType | t1 == tType = error("Second argument of '" ++ op ++
 typeCheckBin _ t2 op tType | t2 == tType = error("First argument of '" ++ op ++ "' must be of type " ++ (show tType))
 typeCheckBin _ _  op tType = error("Arguments to '" ++ op ++ "' must be of type " ++ (show tType))
 
+primitive:: AST -> TypeEnv -> TypeExp
+primitive ast env = let t = (typeChecker ast env) in if t == BoolType || t == IntType then t else error((show t) ++ " is not a primitive type.")
+
 typeCheckPred:: AST -> AST -> TypeEnv -> String -> TypeExp
-typeCheckPred ast1 ast2 env op | (typeChecker ast1 env) == (typeChecker ast2 env) = BoolType
+typeCheckPred ast1 ast2 env op | (primitive ast1 env) == (primitive ast2 env) = BoolType
 typeCheckPred _ _ _ op = error("Arguments to '" ++ op ++ "' must be of the same type")
 
 

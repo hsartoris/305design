@@ -694,6 +694,7 @@ action_59 (26) = happyShift action_27
 action_59 (27) = happyShift action_28
 action_59 (28) = happyShift action_29
 action_59 (29) = happyShift action_30
+action_59 (34) = happyShift action_11
 action_59 (4) = happyGoto action_19
 action_59 _ = happyReduce_4
 
@@ -714,6 +715,7 @@ action_60 (26) = happyShift action_27
 action_60 (27) = happyShift action_28
 action_60 (28) = happyShift action_29
 action_60 (29) = happyShift action_30
+action_60 (34) = happyShift action_11
 action_60 (4) = happyGoto action_19
 action_60 _ = happyReduce_5
 

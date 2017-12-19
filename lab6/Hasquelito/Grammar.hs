@@ -715,10 +715,11 @@ action_60 _ = happyReduce_4
 
 action_61 (30) = happyShift action_63
 action_61 (31) = happyShift action_64
+action_61 (32) = happyShift action_65
 action_61 (5) = happyGoto action_62
 action_61 _ = happyFail
 
-action_62 (15) = happyShift action_65
+action_62 (15) = happyShift action_67
 action_62 _ = happyFail
 
 action_63 _ = happyReduce_25
@@ -727,19 +728,33 @@ action_64 _ = happyReduce_26
 
 action_65 (30) = happyShift action_63
 action_65 (31) = happyShift action_64
+action_65 (32) = happyShift action_65
 action_65 (5) = happyGoto action_66
 action_65 _ = happyFail
 
-action_66 (15) = happyShift action_67
-action_66 _ = happyReduce_5
+action_66 (15) = happyShift action_69
+action_66 (33) = happyShift action_70
+action_66 _ = happyFail
 
 action_67 (30) = happyShift action_63
 action_67 (31) = happyShift action_64
+action_67 (32) = happyShift action_65
 action_67 (5) = happyGoto action_68
 action_67 _ = happyFail
 
-action_68 (15) = happyShift action_67
-action_68 _ = happyReduce_27
+action_68 (15) = happyShift action_69
+action_68 _ = happyReduce_5
+
+action_69 (30) = happyShift action_63
+action_69 (31) = happyShift action_64
+action_69 (32) = happyShift action_65
+action_69 (5) = happyGoto action_71
+action_69 _ = happyFail
+
+action_70 _ = happyReduce_28
+
+action_71 (15) = happyShift action_69
+action_71 _ = happyReduce_27
 
 happyReduce_1 = happySpecReduce_1  4 happyReduction_1
 happyReduction_1 (HappyTerminal (BOOLVAL happy_var_1))
@@ -984,6 +999,15 @@ happyReduction_27 (HappyAbsSyn5  happy_var_3)
 		 (Arrow happy_var_1 happy_var_3
 	)
 happyReduction_27 _ _ _  = notHappyAtAll 
+
+happyReduce_28 = happySpecReduce_3  5 happyReduction_28
+happyReduction_28 _
+	(HappyAbsSyn5  happy_var_2)
+	_
+	 =  HappyAbsSyn5
+		 (happy_var_2
+	)
+happyReduction_28 _ _ _  = notHappyAtAll 
 
 happyNewToken action sts stk [] =
 	action 35 35 notHappyAtAll (HappyState action) sts stk []
